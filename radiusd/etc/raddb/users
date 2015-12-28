@@ -1,0 +1,2 @@
+test     Cleartext-Password := "test"
+         Framed-Filter-Id = ":group_name=admin,ftp:"
