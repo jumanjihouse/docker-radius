@@ -2,10 +2,17 @@
 machine:
   environment:
     TAG: $(date +%Y%m%dT%H%M)-git-${CIRCLE_SHA1:0:7}
+    BATS_VER: 0.4.0
   services:
     - docker
 
 dependencies:
+  cache_directories:
+    - "~/deps"
+  pre:
+    - if [[ ! -e ~/deps/bats_v${BATS_VER}.tar.gz ]]; then mkdir -p ~/deps; curl -sSL -o ~/deps/bats_v${BATS_VER}.tar.gz https://github.com/sstephenson/bats/archive/v${BATS_VER}.tar.gz; fi
+    - tar -xf ~/deps/bats_v${BATS_VER}.tar.gz
+    - sudo bats-${BATS_VER}/install.sh /usr/local
   override:
     - docker info
     - docker version
@@ -14,7 +21,6 @@ dependencies:
 test:
   override:
     - ./make build
-    - ./make start
     - ./make test
 
 # https://circleci.com/docs/configuration#deployment

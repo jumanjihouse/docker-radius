@@ -31,6 +31,22 @@ Use this image (and the radius client) for testing other images, such as
 https://github.com/jumanjiman/docker-duoauthproxy
 
 
+Build and test
+--------------
+
+We use circleci to build, test, and publish the images to Docker hub.
+We use [BATS](https://github.com/sstephenson/bats) to run the test harness.
+Output from BATS resembles:
+
+    ✓ radiusd container is running
+    ✓ radiusd container has an ip address
+    ✓ radiusd responds to status message authenticator
+    ✓ radiusd authenticates user from raddb
+    ✓ radiusd container log is meaningful
+
+    5 tests, 0 failures
+
+
 License
 -------
 
