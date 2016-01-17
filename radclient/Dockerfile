@@ -1,6 +1,6 @@
-FROM alpine:3.2
+FROM alpine:3.3
 
-RUN apk add --update freeradius-radclient && rm -f /var/cache/apk/*
+RUN apk add --no-cache freeradius-radclient
 COPY test.conf /root/test.conf
 COPY status_message /root/
 ENTRYPOINT ["radclient"]
