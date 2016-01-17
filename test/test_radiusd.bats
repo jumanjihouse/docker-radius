@@ -5,7 +5,7 @@ teardown() {
 
 # BATS runs setup() before each @test.
 setup() {
-  docker run -d -t -p 1812:1812/udp -c 512 -m 100m --read-only --name radiusd.service jumanjiman/radiusd -f -l stdout
+  docker run -d -t -p 1812:1812/udp --cpu-shares 512 -m 100m --read-only --name radiusd.service jumanjiman/radiusd -f -l stdout
   radiusd_ip=$(docker inspect --format '{{ .NetworkSettings.IPAddress }}' radiusd.service)
 }
 
