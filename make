@@ -33,11 +33,15 @@ build() {
 
   # Build app images that are used only for the test harness.
   docker build --rm \
+    --build-arg BUILD_DATE=${BUILD_DATE} \
+    --build-arg VCS_REF=${VCS_REF} \
     --build-arg VERSION=${VERSION} \
     -t jumanjiman/radclient radclient/
 
   # Build the app images.
   docker build --rm \
+    --build-arg BUILD_DATE=${BUILD_DATE} \
+    --build-arg VCS_REF=${VCS_REF} \
     --build-arg VERSION=${VERSION} \
     -t jumanjiman/radiusd radiusd/
 
