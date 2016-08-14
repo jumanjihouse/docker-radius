@@ -53,6 +53,20 @@ test() {
   bats test/test_*.bats
 }
 
+publish() {
+  docker login -e ${mail} -u ${user} -p ${pass}
+  # Create tags.
+  docker tag jumanjiman/radiusd jumanjiman/radiusd:${TAG}
+  docker tag jumanjiman/radclient jumanjiman/radclient:${TAG}
+  # Push server.
+  docker push jumanjiman/radiusd:${TAG}
+  docker push jumanjiman/radiusd:latest
+  # Push client.
+  docker push jumanjiman/radclient:${TAG}
+  docker push jumanjiman/radclient:latest
+  docker logout
+}
+
 main() {
   [ "x${1}" = "x" ] && usage || ${1}
 }
