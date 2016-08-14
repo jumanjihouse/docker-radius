@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # If you are on CoreOS or similar minimal OS,
@@ -68,6 +68,7 @@ publish() {
 }
 
 main() {
+  . VARS
   [ "x${1}" = "x" ] && usage || ${1}
 }
 

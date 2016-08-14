@@ -26,6 +26,8 @@ dependencies:
 
 test:
   override:
+    - echo -e "export BUILD_DATE=${BUILD_DATE}\nexport TAG=${TAG}" > VARS
+    - cat VARS
     - ./make build
     - docker inspect jumanjiman/radclient
     - docker inspect jumanjiman/radiusd
