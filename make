@@ -32,10 +32,14 @@ build() {
   stop
 
   # Build app images that are used only for the test harness.
-  docker build --rm -t jumanjiman/radclient radclient/
+  docker build --rm \
+    --build-arg VERSION=${VERSION} \
+    -t jumanjiman/radclient radclient/
 
   # Build the app images.
-  docker build --rm -t jumanjiman/radiusd radiusd/
+  docker build --rm \
+    --build-arg VERSION=${VERSION} \
+    -t jumanjiman/radiusd radiusd/
 
   # Show image sizes.
   docker images | grep -e SIZE -e radiusd -e radclient

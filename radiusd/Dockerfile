@@ -1,6 +1,8 @@
 FROM alpine:3.4
 
-RUN apk add --no-cache freeradius openssl && \
+ARG VERSION
+
+RUN apk add --no-cache freeradius=${VERSION} openssl && \
     rm -f /etc/raddb/mods-enabled/eap && \
     echo '$INCLUDE /etc/raddb/users' >> /etc/raddb/mods-config/files/authorize
 

@@ -19,7 +19,7 @@ Docker Hub:
 Docker tags:
 
 * optimistic: `latest`
-* pessimistic: `${build_date}-git-${hash}`
+* pessimistic: `${freeradius_version}-${build_date}-git-${hash}`
 
 
 Usage
