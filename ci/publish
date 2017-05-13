@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+docker login -u ${user} -p ${pass}
+
+# Create tags.
+docker tag jumanjiman/radiusd jumanjiman/radiusd:${TAG}
+docker tag jumanjiman/radclient jumanjiman/radclient:${TAG}
+
+# Push server.
+docker push jumanjiman/radiusd:${TAG}
+docker push jumanjiman/radiusd:latest
+
+# Push client.
+docker push jumanjiman/radclient:${TAG}
+docker push jumanjiman/radclient:latest
+
+docker logout
+
+# Ask microbadger to update.
+curl -X POST 'https://hooks.microbadger.com/images/jumanjiman/radclient/-1Fk38Q1-DHDKIA9DNpLJcYvt54='
+curl -X POST 'https://hooks.microbadger.com/images/jumanjiman/radiusd/fi2LOJtwgnKBG4ckSoQAvT3QBkY='

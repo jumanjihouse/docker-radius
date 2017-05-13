@@ -1,0 +1,35 @@
+#!/bin/sh
+set -e
+
+cat > ci/vars <<EOF
+  VERSION=3.0.12-r2
+  BUILD_DATE=$(date +%Y%m%dT%H%M)
+  VCS_REF=${CIRCLE_SHA1:0:7}
+  TAG=\${VERSION}-\${BUILD_DATE}-git-\${VCS_REF}
+
+  export VERSION
+  export BUILD_DATE
+  export VCS_REF
+  export TAG
+EOF
+
+. ci/vars
+
+ci/clean
+
+# Build app images that are used only for the test harness.
+docker build --rm \
+  --build-arg BUILD_DATE=${BUILD_DATE} \
+  --build-arg VCS_REF=${VCS_REF} \
+  --build-arg VERSION=${VERSION} \
+  -t jumanjiman/radclient radclient/
+
+# Build the app images.
+docker build --rm \
+  --build-arg BUILD_DATE=${BUILD_DATE} \
+  --build-arg VCS_REF=${VCS_REF} \
+  --build-arg VERSION=${VERSION} \
+  -t jumanjiman/radiusd radiusd/
+
+# Show image sizes.
+docker images | grep -e SIZE -e radiusd -e radclient
