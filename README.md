@@ -39,12 +39,11 @@ We use [BATS](https://github.com/sstephenson/bats) to run the test harness.
 Output from BATS resembles:
 
     ✓ radiusd container is running
-    ✓ radiusd container has an ip address
     ✓ radiusd responds to status message authenticator
     ✓ radiusd authenticates user from raddb
     ✓ radiusd container log is meaningful
 
-    5 tests, 0 failures
+    4 tests, 0 failures
 
 
 License
