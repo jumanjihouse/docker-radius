@@ -1,4 +1,4 @@
-FROM alpine:3.5
+FROM alpine:3.6
 
 ARG BUILD_DATE
 ARG VCS_REF
@@ -17,7 +17,11 @@ LABEL \
     org.label-schema.version=${VERSION}
 
 
+# Mysteriously, some files in /etc/raddb have incorrect ownership.
+# Therefore we have to fix it up, and we have to do so
+# in the same layer as the installation (on circleci).
 RUN apk add --no-cache freeradius=${VERSION} openssl && \
+    find /etc/raddb/ -exec chgrp -h radius {} + && \
     rm -f /etc/raddb/mods-enabled/eap && \
     echo '$INCLUDE /etc/raddb/users' >> /etc/raddb/mods-config/files/authorize
 
