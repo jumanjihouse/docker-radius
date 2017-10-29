@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -u
 
 (
 docker rm -f radiusd.service || :
