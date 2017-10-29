@@ -1,5 +1,9 @@
 #!/bin/bash
 set -e
+set -u
+
+. ci/functions.sh
+verbosity=1
 
 . ci/vars
 
