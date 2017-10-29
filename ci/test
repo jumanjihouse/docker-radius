@@ -1,5 +1,20 @@
 #!/bin/sh
 set -e
+set -u
 
+. ci/functions.sh
+
+echo
+echo Start radiusd.
 docker-compose up -d radiusd
+
+echo
+echo Invoke BATS tests.
+echo
 bats ci/test_*.bats
+
+echo
+echo Check every file for things like trailing whitespace.
+# Hint: -v1 shows just the names of offending files.
+#       -v2 shows lines with trailing whitespace.
+ci/check-files -v1
