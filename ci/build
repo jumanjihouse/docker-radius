@@ -2,6 +2,9 @@
 set -e
 set -u
 
+. ci/functions.sh
+verbosity=1
+
 cat > ci/vars <<EOF
   VERSION=3.0.13-r2
   BUILD_DATE=$(date +%Y%m%dT%H%M)
@@ -16,13 +19,18 @@ EOF
 
 . ci/vars
 
+echo
+echo Clean up from previous runs.
 ci/clean
 
-# Build app images that are used only for the test harness.
+echo
+echo Build app images that are used only for the test harness.
 docker-compose build radclient
 
-# Build the app images.
+echo
+echo Build the app images.
 docker-compose build radiusd
 
-# Show image sizes.
+echo
+echo Show image sizes.
 docker images | grep -e SIZE -e radiusd -e radclient
