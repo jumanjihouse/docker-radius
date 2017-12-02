@@ -1,20 +1,14 @@
-#!/bin/sh
-set -e
-set -u
+#!/bin/bash
+set -eEu
+set -o pipefail
 
 . ci/functions.sh
-verbosity=1
 
 cat > ci/vars <<EOF
-  VERSION=3.0.13-r2
-  BUILD_DATE=$(date +%Y%m%dT%H%M)
-  VCS_REF=$(git describe --abbrev=7 --tags --always)
-  TAG=\${VERSION}-\${BUILD_DATE}-git-\${VCS_REF}
-
-  export VERSION
-  export BUILD_DATE
-  export VCS_REF
-  export TAG
+declare -rx  VERSION=3.0.13-r2
+declare -rx  BUILD_DATE=$(date +%Y%m%dT%H%M)
+declare -rx  VCS_REF=$(git describe --abbrev=7 --tags --always)
+declare -rx  TAG=\${VERSION}-\${BUILD_DATE}-git-\${VCS_REF}
 EOF
 
 . ci/vars

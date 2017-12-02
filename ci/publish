@@ -1,28 +1,32 @@
 #!/bin/bash
-set -e
-set -u
+set -eEu
+set -o pipefail
 
 . ci/functions.sh
-verbosity=1
 
 . ci/vars
 
-docker login -u ${user} -p ${pass}
+# shellcheck disable=SC2154
+docker login -u "${user}" -p "${pass}"
 
 # Create tags.
-docker tag jumanjiman/radiusd jumanjiman/radiusd:${TAG}
-docker tag jumanjiman/radclient jumanjiman/radclient:${TAG}
+docker tag jumanjiman/radiusd jumanjiman/radiusd:"${TAG}"
+docker tag jumanjiman/radclient jumanjiman/radclient:"${TAG}"
 
 # Push server.
-docker push jumanjiman/radiusd:${TAG}
+docker push jumanjiman/radiusd:"${TAG}"
 docker push jumanjiman/radiusd:latest
 
 # Push client.
-docker push jumanjiman/radclient:${TAG}
+docker push jumanjiman/radclient:"${TAG}"
 docker push jumanjiman/radclient:latest
 
 docker logout
 
 # Ask microbadger to update.
+echo -n 'INFO: ask microbadger to check radclient'
 curl -X POST 'https://hooks.microbadger.com/images/jumanjiman/radclient/-1Fk38Q1-DHDKIA9DNpLJcYvt54='
+echo
+echo -n 'INFO: ask microbadger to check radiusd'
 curl -X POST 'https://hooks.microbadger.com/images/jumanjiman/radiusd/fi2LOJtwgnKBG4ckSoQAvT3QBkY='
+echo
