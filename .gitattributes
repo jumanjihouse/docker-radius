@@ -25,3 +25,7 @@
 *.pl  diff=perl
 *.py  diff=python
 *.rb  diff=ruby
+
+# Allow blank lines at the end of these files.
+# https://git-scm.com/docs/gitattributes#_checking_whitespace_errors
+# https://git-scm.com/docs/git-config#git-config-corewhitespace
