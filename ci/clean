@@ -5,8 +5,8 @@ set -o pipefail
 . ci/functions.sh
 
 (
-docker rm -f radiusd.service || :
-docker rmi jumanjiman/radiusd || :
-docker rmi jumanjiman/radclient || :
-docker images -q -f dangling=true | xargs docker rmi || :
-) &> /dev/null
+  docker rm -f radiusd.service || :
+  docker rmi jumanjiman/radiusd || :
+  docker rmi jumanjiman/radclient || :
+  docker images -q -f dangling=true | xargs docker rmi || :
+) &>/dev/null
