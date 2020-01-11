@@ -13,17 +13,13 @@ networks:
 
 services:
   radiusd:
-    image: jumanjiman/radiusd
+    image: radiusd
     command: -f -l stdout
     networks:
       testnet:
         ipv4_address: 192.168.254.254
     build:
       context: radiusd/
-      args:
-        - BUILD_DATE
-        - VCS_REF
-        - VERSION
     ports:
       - "1812:1812/udp"
     tty: true
@@ -36,15 +32,11 @@ services:
     shm_size: 16M
 
   radclient: &radclient
-    image: jumanjiman/radclient
+    image: radclient
     networks:
       testnet:
     build:
       context: radclient/
-      args:
-        - BUILD_DATE=${BUILD_DATE}
-        - VCS_REF
-        - VERSION=${VERSION}
     stdin_open: true
     tty: true
     read_only: true
@@ -65,3 +57,11 @@ services:
     extends:
       service: radclient
     command: -f /root/test.conf 192.168.254.254:1812 auth testing123
+
+  version:
+    image: radiusd
+    entrypoint:
+      - sh
+    command:
+      - -c
+      - "apk policy freeradius 2>/dev/null | tail -n +2 | head -1 | tr -d ' :'"

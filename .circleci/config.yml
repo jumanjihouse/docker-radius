@@ -25,6 +25,11 @@ jobs:
             ci/build
 
       - run:
+          name: Tag the image and add metadata
+          command: |
+            ci/tag
+
+      - run:
           name: Test the image
           command: |
             ci/test

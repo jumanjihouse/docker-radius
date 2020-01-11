@@ -19,6 +19,7 @@ rm -fr /etc/periodic
 
 # Remove all but a handful of admin commands.
 find /sbin /usr/sbin ! -type d \
+  -a ! -name apk \
   -a ! -name nologin \
   -a ! -name radiusd \
   -a ! -name raddebug \
@@ -41,10 +42,6 @@ sysdirs="
 find $sysdirs -xdev -type d -perm +0002 -exec chmod o-w {} +
 # shellcheck disable=SC2086
 find $sysdirs -xdev -type f -perm +0002 -exec chmod o-w {} +
-
-# Remove apk configs.
-# shellcheck disable=SC2086
-find $sysdirs -xdev -regex '.*apk.*' -exec rm -fr {} +
 
 # Remove crufty...
 #   /etc/shadow-

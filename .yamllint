@@ -1,0 +1,9 @@
+---
+# https://yamllint.readthedocs.io/en/latest/configuration.html
+extends: default
+
+# https://yamllint.readthedocs.io/en/latest/configuration.html#ignoring-paths
+rules:
+  line-length:
+    ignore: |
+      docker-compose-metadata.yaml
