@@ -1,4 +1,4 @@
-FROM alpine:3.9
+FROM alpine:3.9.4
 
 # Mysteriously, some files in /etc/raddb have incorrect ownership.
 # Therefore we have to fix it up, and we have to do so
