@@ -8,7 +8,7 @@ set -o pipefail
 
 # shellcheck disable=SC2154
 docker login -u "${user}" -p "${pass}"
-run docker-compose -f docker-compose-metadata.yaml push
+docker-compose -f docker-compose-metadata.yaml push
 docker logout
 
 # Ask microbadger to update.
